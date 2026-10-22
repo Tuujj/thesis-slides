@@ -674,23 +674,17 @@ def _(mo, page):
 
 @app.cell(hide_code=True)
 def _():
-    # helper modules, data and CSS: assets/ next to this notebook, else downloaded from GitHub
+    # helper modules, data and CSS, downloaded from the GitHub release "assets"
     import tempfile as _tempfile
     import urllib.request as _request
     from pathlib import Path as _Path
 
-    import marimo as _mo
-
     _names = ['mods/figures.py', 'mods/xy_sim.py', 'mods/widgets.py', 'data/sim_params.json', 'data/gc_pred.csv', 'data/rollouts.npz', 'deck.css']
-    _local = _Path(str(_mo.notebook_dir() or ".")) / "assets"
-    if all((_local / _n).exists() for _n in _names):
-        ASSET_DIR = _local
-    else:
-        ASSET_DIR = _Path(_tempfile.mkdtemp(prefix="deck_assets_"))
-        for _n in _names:
-            (ASSET_DIR / _n).parent.mkdir(parents=True, exist_ok=True)
-            with _request.urlopen('https://raw.githubusercontent.com/Tuujj/thesis-slides/main/assets/' + _n, timeout=60) as _r:
-                (ASSET_DIR / _n).write_bytes(_r.read())
+    ASSET_DIR = _Path(_tempfile.mkdtemp(prefix="deck_assets_"))
+    for _n in _names:
+        (ASSET_DIR / _n).parent.mkdir(parents=True, exist_ok=True)
+        with _request.urlopen('https://github.com/Tuujj/thesis-slides/releases/download/assets/' + _n.split("/")[-1], timeout=60) as _r:
+            (ASSET_DIR / _n).write_bytes(_r.read())
     return (ASSET_DIR,)
 
 
