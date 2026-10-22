@@ -1,0 +1,86 @@
+{
+  "N": 9,
+  "k0": 1.0,
+  "alpha": 0.1,
+  "B": 0.2,
+  "B_dir_deg": 180.0,
+  "torque_scale": 0.5,
+  "delay": 1,
+  "tap": 1,
+  "input_site": 8,
+  "dt": 0.22675736961451248,
+  "integrator": "euler",
+  "dc_r": 0.995,
+  "out_scale": 0.8,
+  "inertia": 1.0,
+  "readout": "sin",
+  "input_mode": "torque",
+  "periodic": false,
+  "clip": 1.0,
+  "gc_true": 3.1204261779785156,
+  "train_gain_max": 2.1842983245849608,
+  "eval": {
+    "n_steps": 20000,
+    "settle_steps": 4000,
+    "pluck_amp": 0.2,
+    "pluck_width": 20,
+    "ref_win": [
+      20,
+      276
+    ],
+    "late_win": [
+      16000,
+      20000
+    ],
+    "grid_hi_factor": 2.2,
+    "n_grid": 45,
+    "n_refine": 17,
+    "show_factors": [
+      0.5,
+      1.15,
+      2.0
+    ]
+  },
+  "datagen": {
+    "train_gain_frac": 0.7,
+    "n_train": 40,
+    "n_val": 10,
+    "traj_len": 3000,
+    "theta0_spread": 0.4,
+    "n_bursts": [
+      3,
+      9
+    ],
+    "burst_amp": 0.6,
+    "burst_width": [
+      3,
+      150
+    ],
+    "drive_noise": 0.02
+  },
+  "train": {
+    "hidden": 64,
+    "epochs": 120,
+    "batch": 4096,
+    "lr": 0.003,
+    "lr_min": 0.0001,
+    "fail_val_loss": 0.05
+  },
+  "pilot": {
+    "datasets": [
+      0,
+      1,
+      2
+    ],
+    "seeds": [
+      0,
+      1
+    ]
+  },
+  "model_state": "rotors 1..N-1 (rotor 0 is a fixed anchor at pi)",
+  "input_port": "known: torque_scale * e_input on omega-dot (all models)",
+  "integrator_models": "semi-implicit Euler identical to simulator",
+  "loss": "one-step derivative matching, per-dim std-normalised MSE",
+  "kernel_check_max_abs_dy": 7.626538289784435e-14,
+  "runtime_s": 869.1
+}
